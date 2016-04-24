@@ -100,7 +100,7 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! install --production
+  call :ExecuteCmd !NPM_CMD! install --verbose --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
@@ -125,7 +125,7 @@ goto end
 :ExecuteCmd
 setlocal
 set _CMD_=%*
-echo calling command: %_CMD_%
+echo ************ calling command ********* : %_CMD_%
 call %_CMD_%
 if "%ERRORLEVEL%" NEQ "0" echo Failed exitCode=%ERRORLEVEL%, command=%_CMD_%
 exit /b %ERRORLEVEL%

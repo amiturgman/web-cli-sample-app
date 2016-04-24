@@ -1,0 +1,213 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "STORAGE_ACCOUNT": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The name for the storage account."
+      }
+    },
+    "LOG_STORAGE_ACCOUNT": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The name for the logs storage account."
+      }
+    },
+    "GOOGLE_CLIENT_ID": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "[Optional] The Google client Id used for Google Authentication."
+      }
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "[Optional] The Google client Secret used for Google Authentication."
+      }
+    },
+    "GOOGLE_ADMIN_ACCOUNT": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "[Optional] The Google Admin Account used for Authorization (must also provide Google client Id and Secret above)."
+      }
+    },
+    "hostingPlanName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
+    },
+    "consoleWebsiteName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the console website."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "allowedValues": [
+        "Free",
+        "Shared",
+        "Basic",
+        "Standard"
+      ],
+      "defaultValue": "Basic",
+      "metadata": {
+        "description": "The pricing tier for the hosting plan."
+      }
+    },
+    "workerSize": {
+      "type": "string",
+      "allowedValues": [
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue": "0",
+      "metadata": {
+        "description": "The instance size of the hosting plan (small, medium, or large)."
+      }
+    },
+    "repoURL": {
+      "type": "string",
+      "defaultValue": "https://github.com/amiturgman/web-cli-sample-app.git",
+      "metadata": {
+        "description": "The URL for the GitHub repository that contains the project to deploy."
+      }
+    },
+    "branch": {
+      "type": "string",
+      "defaultValue": "deployment",
+      "metadata": {
+        "description": "The branch of the GitHub repository to use."
+      }
+    },
+    "storageType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+    "logStorageType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+    "enableAlwaysOn": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Enable/Disable always on. If you choose free for hosting plan, this should be set to false as always on is not supported for free plan"
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2014-06-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "name": "[parameters('hostingPlanName')]",
+        "sku": "[parameters('sku')]",
+        "workerSize": "[parameters('workerSize')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[parameters('STORAGE_ACCOUNT')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "[parameters('STORAGE_ACCOUNT')]"
+      },
+      "properties": {
+        "accountType": "[parameters('storageType')]"
+      }
+    },
+    {
+      "name": "[parameters('LOG_STORAGE_ACCOUNT')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "[parameters('LOG_STORAGE_ACCOUNT')]"
+      },
+      "properties": {
+        "accountType": "[parameters('logStorageType')]"
+      }
+    },
+    {
+      "name": "[parameters('consoleWebsiteName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', parameters('STORAGE_ACCOUNT'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', parameters('LOG_STORAGE_ACCOUNT'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "Resource",
+        "displayName": "console"
+      },
+      "properties": {
+        "name": "[parameters('consoleWebsiteName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('consoleWebsiteName'))]"
+          ],
+          "properties": {
+            "STORAGE_ACCOUNT": "[parameters('STORAGE_ACCOUNT')]",
+            "STORAGE_KEY": "[listKeys(concat('Microsoft.Storage/storageAccounts/', parameters('STORAGE_ACCOUNT')),'2015-06-15').key1]",
+            "LOG_STORAGE_ACCOUNT": "[parameters('LOG_STORAGE_ACCOUNT')]",
+            "LOG_STORAGE_KEY": "[listKeys(concat('Microsoft.Storage/storageAccounts/', parameters('LOG_STORAGE_ACCOUNT')),'2015-06-15').key1]",
+            "GOOGLE_CLIENT_ID": "[parameters('GOOGLE_CLIENT_ID')]",
+            "GOOGLE_CLIENT_SECRET": "[parameters('GOOGLE_CLIENT_SECRET')]",
+            "GOOGLE_CALLBACK_URL": "[concat('https://', parameters('consoleWebsiteName'), '.azurewebsites.net/.auth/login/google/callback')]",
+            "GOOGLE_ADMIN_ACCOUNT": "[parameters('GOOGLE_ADMIN_ACCOUNT')]"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('consoleWebsiteName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration": false
+          }
+        }
+      ]
+    }
+  ]
+}

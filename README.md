@@ -1,3 +1,4 @@
+
 Web-based Command Line Interface Console
 ========================================
 This is a sample application for using the [web-cli](https://github.com/amiturgman/web-cli) html [Polymer](https://www.polymer-project.org/1.0/) control. 
@@ -24,7 +25,18 @@ The documentation can also be accessed using the `man` command from within the c
 
 Deployment
 ---------
-The application can be cloned and run locally immediately on you machine. It can be deployed to Azure using the `Deploy To Azure` button (will be added soon!), or on any other cloud hosting platform. 
+The application can be cloned and run locally immediately on you machine. 
+
+It can be deployed to Azure using the `Deploy To Azure` below, or on any other cloud hosting platform. 
+
+#### Azure Deployment
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Famiturgman%2Fweb-cli-sample-app%2Fmaster%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+This script provisions the resources needed for this solution to run on Azure. 
+After deployment is completed successfully, you'll need to manually set up `Deployment Source` under the Web App `Settings` section to deploy the code from your forked repository.
 
 
 Running Locally

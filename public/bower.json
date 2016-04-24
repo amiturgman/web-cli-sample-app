@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "web-cli": "^0.0.5"
+    "jquery": "^2.2.3",
+    "web-cli": "^0.0.8"
   }
 }

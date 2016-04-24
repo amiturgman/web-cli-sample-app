@@ -14,37 +14,43 @@ $(function () {
 
     if (user.name)
       environmentVars.username = { type: 'string', value: user.name, description: 'The current username', userReadOnly: true }; 
-    
+
+
     var webCli = $('#webCli')[0];
+
+    // webCli is ready to be initialized    
+    webCli.onReady = function () {
+
+      // init the console with options object
+      webCli.init({
+        environmentVars: environmentVars,
+        plugins: cliData.apis,
+        commands: getLocalCommands(),
+        broadcastUrlGenerator: broadcastUrlGenerator,
+        welcomeMessage: 'Welcome to the web-cli demo app! <br/>Type "help" to start exploring the commands currently supported or "man" to get a list of available manuals for this console.'
+      });
+
+      updatePrompt();
+    }    
 
     // listen on envronment variables changes and update the consolde prompt string accordingly.
     // in this case, we'de like to reflect the change in the app name.
     webCli.addEventListener('envChanged', function(e) {
       console.log('envChanged!', e.detail);
-      updatePrompt.call(e.target);
+      updatePrompt.call();
     });
-    
-    // init the console    
-    webCli.init({
-      environmentVars: environmentVars,
-      plugins: cliData.apis,
-      commands: getLocalCommands(),
-      broadcastUrlGenerator: broadcastUrlGenerator,
-      welcomeMessage: 'Welcome to the web-cli demo app! <br/>Type "help" to start exploring the commands currently supported or "man" to get a list of available manuals for this console.'
-    });
-
-    updatePrompt.call(webCli);
+   
 
     // updates the prompt string    
     function updatePrompt() {
       // this is the cli control 
-      var app = this.env('app');
+      var app = webCli.env('app');
       var image = user.image ? "<img src='" + user.image + "' class='promptImage' width='18px'/>" : '';
       var prompt = image + '[';
       if (user.name) prompt += user.name + '\\';
       if (app) prompt += '' + app + '';
       prompt += ']>';
-      this.prompt(prompt);
+      webCli.prompt(prompt);
     }
 
   });  

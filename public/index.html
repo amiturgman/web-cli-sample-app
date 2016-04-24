@@ -2,9 +2,10 @@
 <html>
 <head>
     <title>web-cli sample console</title>
-    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <link rel="import" href="bower_components/web-cli/web-cli.html">
-    <script src="console.js"></script>
+    <script src="console.js" defer></script>
     <style>
         .promptImage {
             vertical-align: middle;
@@ -19,6 +20,6 @@
     </style>
 </head>
 <body>
-    <web-cli id="webCli" />
+    <web-cli id="webCli"></web-cli>
 </body>
 </html>
