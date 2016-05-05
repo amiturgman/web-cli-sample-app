@@ -1,0 +1,7 @@
+.anode-logs { font-size: 1.2em; }
+.anode-logs div { padding: 0px; margin: 0px; border-bottom: 1px gray solid;}
+.anode-logs pre { padding: 0px; margin: 0px; padding-left: 10px; padding-right: 10px; display: inline-table;}
+.anode-logs .log   { color           : gray    }
+.anode-logs .info  { background-color: white   }
+.anode-logs .warn  { background-color: yellow  }
+.anode-logs .error { background-color: red     }

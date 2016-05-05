@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>sticky-notes web-cli sample console</title>
+    
+    <link href="../bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+    
+    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <link rel="import" href="../bower_components/web-cli/web-cli.html">
+    <script src="console.js" defer></script>
+    <style>
+                
+        body {
+            font-family: 'Lucida Grande', 'Helvetica', sans-serif;
+        }
+
+        .note {
+            display: none;
+            background-color: yellow;
+            padding: 10px;
+            position: absolute;
+            width: 500px;
+            height: 330px;
+            box-shadow: 0px 5px 10px gray; /* http://www.css3.info/preview/box-shadow/ */
+            /*-webkit-box-shadow: 0px 5px 10px gray; /* using webkit to drop shadow on note box */
+        }
+
+        .note:hover .closebutton { /* when hovering a note- display its close button */
+            display: block;
+        }
+
+        .closebutton {
+            display: none;
+            background-image: url('deleteButton.png');
+            height: 30px;
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            width: 30px;
+        }
+
+        .closebutton:active {
+            background-image: url('deleteButtonPressed.png');
+        }
+
+        .edit {
+            outline: none;
+        }
+
+        .timestamp {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            font-size: 12px;
+            background-color: #db0;
+            color: white;
+            padding: 2px 20px;
+            text-align: right;
+        }
+        
+        .promptImage {
+            vertical-align: middle;
+        }
+        
+        .cli-container {
+            position: absolute;
+            top: 0;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            border: 1px solid gray;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <button id="btnNewNote">Create a new console</button>
+
+    <div class="note">
+        <div class="closebutton"></div>
+        <div class="cli-container"></div>
+        <div class="timestamp">Created: <span class="modifiedTime">someTimeStamp</span></div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "name": "console",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Administration Console for Corpus to Graph",
+  "author": {
+    "name": "Ami Turgman",
+    "email": "ami.turgman@microsoft.com"
+  },
+  "engines": {
+    "node": "4.2.4",
+    "npm": "3.8.3"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "azure-logging": "^0.3.2",
+    "azure-storage": "^0.7.0",
+    "body-parser": "~1.8.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.0",
+    "debug": "~2.0.0",
+    "docrouter": "^0.7.0",
+    "express": "^4.13.4",
+    "express-session": "^1.12.1",
+    "googleapis": "^2.1.7",
+    "marked": "^0.3.5",
+    "moment": "^2.13.0",
+    "morgan": "^1.6.1",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^0.2.0",
+    "string": "^3.3.1",
+    "string_format": "0.0.6",
+    "validator": "^4.5.2"
+  }
+}

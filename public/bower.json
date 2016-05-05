@@ -1,0 +1,24 @@
+{
+  "name": "webcli",
+  "homepage": "https://github.com/TODO:Update",
+  "authors": [
+    "amiturgman <ami.turgman@microsoft.com>"
+  ],
+  "description": "Web Based Command Line Interface",
+  "main": "index.html",
+  "keywords": [
+    "cli"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "web-cli": "^0.0.12"
+  }
+}
