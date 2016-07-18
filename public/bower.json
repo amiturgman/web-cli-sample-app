@@ -19,6 +19,6 @@
   ],
   "dependencies": {
     "jquery": "^2.2.3",
-    "web-cli": "^0.0.12"
+    "web-cli": "^0.0.13"
   }
 }
