@@ -29,6 +29,7 @@
     "marked": "^0.3.5",
     "moment": "^2.13.0",
     "morgan": "^1.6.1",
+    "nconf": "^0.8.4",
     "passport": "^0.3.2",
     "passport-google-oauth": "^0.2.0",
     "string": "^3.3.1",

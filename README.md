@@ -11,7 +11,6 @@ The application is a holistic solution for a web based CLI, with the following f
 
 The features are automatically enabled based on the provided configuration, so you can start by running the app as is before onboarding with Google for the authentication, or subscribing with Azure to provide an Azure Storage Account settings for the users and logs features.
 
-
 Plugins samples
 ---------------
 The application implements a few plugins to extend the console with more commands.
@@ -23,22 +22,6 @@ The documentation can also be accessed using the `man` command from within the c
 ![Example for the app](https://github.com/amiturgman/web-cli-sample-app/raw/master/images/demo.png "Screenshot")
 
 ![Animated Demo](https://github.com/amiturgman/web-cli-sample-app/raw/master/images/web-cli-demo.gif "animated demo")
-
-
-Deployment
----------
-The application can be cloned and run locally immediately on you machine. 
-
-It can be deployed to Azure using the `Deploy To Azure` below, or on any other cloud hosting platform. 
-
-#### Azure Deployment
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Famiturgman%2Fweb-cli-sample-app%2Fmaster%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-This script provisions the resources needed for this solution to run on Azure. 
-After deployment is completed successfully, you'll need to manually set up `Deployment Source` under the Web App `Settings` section to deploy the code from your forked repository.
 
 
 Running Locally
@@ -57,9 +40,11 @@ I also created a cool [stickey-notes-like](public/stickey-notes) sample in which
 To try it, browse to `http://localhost:3000/stickey-notes`
 
 
-To enable the features described above, refer to the [config](config.js) file, and provide the relevant settings based on the features you'de like to enable.
-You can either define these setting as environment variables, or define them in the file itself.
-
+To enable the features described above, refer to the [config/index.js](config/index.js) file, and provide the relevant settings based on the features you'de like to enable.
+You can either define these setting as environment variables, or define them in a local file (for development).
+* Copy the `config/dev.sample.json` file and create a new file named `config/dev.private.json`.
+* Fill in the details for the features you'de like to support.
+* You don't have to fill in all settings, but **leave those you're not using blank**.
 
 Enable Google Authentication
 ----------------------------
